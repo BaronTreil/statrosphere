@@ -1,0 +1,44 @@
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav id="sidebar" (click)="toggleLeftBar();" [ngClass]="expanded ? '': 'active'">
+    <ul class="list-unstyled components">
+      <li>
+        <ul class="list-unstyled">
+          <li click-stop-propagation (click)="refreshButtonClick();">
+            <p>Refresh <span class="fa fa-refresh "></span></p>
+          </li>
+          <li click-stop-propagation (click)="toggleRightBar();" [ngClass]="expandedRight ? 'active': ''">
+            <p>Right P<span class="fa fa-angle-double-left mr-1" [ngClass]="expandedRight ? 'fa-rotate-180': ''"></span></p>
+          </li>
+          <li click-stop-propagation (click)="zoomTest();">
+            <p>Z-Test <span class="fa fa-search"></span></p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="list-unstyled components bottom w-100 p-0 m-0 ">
+      <li click-stop-propagation (click)="toggleLeftBar();" >
+        <p class="m-0">&#8291;<span class="fa fa-angle-right mr-1" [ngClass]="expanded ? 'fa-rotate-180': ''"></span></p>
+      </li>
+    </ul>
+
+  </nav>
+
+  <!-- Page Content  -->
+  <div id="content" [ngClass]="expanded ? '' : 'active'" #mapDiv>
+  </div>
+
+  <nav id="sidebar-right" [ngClass]="expandedRight ? 'active': ''">
+    <div class="country-details-panel" *ngIf="selectedCountry">
+      <h1>{{selectedCountry['name']}}</h1>
+      <div class="line"></div>
+      <ul *ngIf="selectedCountry['details'] != false" class="list-unstyled components">
+        <li *ngFor="let item of selectedCountry['details'] | keyvalue">
+          <b>{{item.key | titlecase}} : </b>   <span class="ml-2"><i>{{item.value}}</i></span>
+        </li>
+      <p *ngIf="selectedCountry['details'] === false">No informations available for this country</p>
+      </ul>
+    </div>
+  </nav>
+</div>

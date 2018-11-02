@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+}
+body{
+  padding-top: 48px;
+}
+
+.bg-dark{
+  background-color:  #101213;
+}
+
+.v-center {
+  display: flex;
+  align-items: center;
+}
+
+path.datamaps-subunit:hover{
+  cursor: pointer;
+}
