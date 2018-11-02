@@ -95,13 +95,12 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
   }
   zoomTest() {
     console.log("Zoom test");
-    console.log((this.mapRef as DataMap).svg);
     this.zoomTo(150, 86);
   }
 
   zoomTo(abs, ord) {
     console.log("Incoming coordinates: " + abs + " ; " + ord);
-    this.mapRef.svg.select("g")
+    (this.mapRef as any).svg.select("g")
       .transition(500)
       .attr("transform", "translate(" + abs + "," + ord + ") scale(1)");
   }
@@ -147,13 +146,13 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
         },
         done: datamap => {
           d3.select(".datamap").call(
-            d3
+            (d3 as any)
               .zoom()
               .scaleExtent([0.7, 6])
               .on("zoom", function() {
                 datamap.svg
                   .selectAll("g")
-                  .attr("transform", d3.event.transform);
+                  .attr("transform", (d3.event as any).transform);
               })
           );
           d3.select(".datamap").on("click", () => {
@@ -168,7 +167,7 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
             const bbox = nodes[i].getBBox();
             console.log("BBOX : " + bbox.x + " ; " + + bbox.y);
             console.log("CLICK LOCATION  : " + d3.mouse(nodes[i]));
-            this.zoomTo(bbox.x, bbox.y);
+           // this.zoomTo(bbox.x, bbox.y);
             this.showCountryDetails(d.properties.name, d.id);
           });
           // datamap.svg.selectAll(".datamaps-subunit").on("click", geography => {
