@@ -11,10 +11,13 @@ import { ClickStopPropagationDirective } from "./click-stop-propagation.directiv
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { GridStackDirective } from "./directives/grid-stack.directive";
 import { GridStackItemDirective } from "./directives/grid-stack-item.directive";
+import { LocationStrategy, HashLocationStrategy } from "@angular/common";
+
 const appRoutes: Routes = [
   { path: "dashboard", component: TableComponent },
   { path: "worldmap", component: WorldMapComponent },
-  { path: "", redirectTo: "worldmap", pathMatch: "full" }
+  { path: "", redirectTo: "worldmap", pathMatch: "full" },
+  { path: "**", redirectTo: "worldmap" }
 ];
 
 @NgModule({
@@ -32,7 +35,10 @@ const appRoutes: Routes = [
     GridStackDirective,
     GridStackItemDirective
   ],
-  providers: [DataProviderService],
+  providers: [
+    DataProviderService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
