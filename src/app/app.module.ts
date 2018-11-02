@@ -7,25 +7,31 @@ import { HeaderComponent } from "./header/header.component";
 import { WorldMapComponent } from "./world-map/world-map.component";
 import { TableComponent } from "./table/table.component";
 import { Routes, RouterModule } from "@angular/router";
-import { ClickStopPropagationDirective } from './click-stop-propagation.directive';
-
+import { ClickStopPropagationDirective } from "./click-stop-propagation.directive";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { GridStackDirective } from "./directives/grid-stack.directive";
+import { GridStackItemDirective } from "./directives/grid-stack-item.directive";
 const appRoutes: Routes = [
-  { path: "table", component: TableComponent },
+  { path: "dashboard", component: TableComponent },
   { path: "worldmap", component: WorldMapComponent },
-  { path: "", redirectTo: 'worldmap', pathMatch: 'full' }
+  { path: "", redirectTo: "worldmap", pathMatch: "full" }
 ];
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(appRoutes)
+  ],
   declarations: [
     AppComponent,
     HeaderComponent,
     WorldMapComponent,
     TableComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    GridStackDirective,
+    GridStackItemDirective
   ],
-  imports: [
-    BrowserModule,
-     RouterModule.forRoot(appRoutes)],
   providers: [DataProviderService],
   bootstrap: [AppComponent]
 })

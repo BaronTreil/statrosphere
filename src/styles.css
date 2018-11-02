@@ -1,6 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+@import "https://fonts.googleapis.com/css?family=Contrail+One";
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
@@ -20,4 +28,44 @@ body{
 
 path.datamaps-subunit:hover{
   cursor: pointer;
+}
+.grid-stack>.grid-stack-item>.grid-stack-item-content {
+  border: solid 1px #ddd3c5;
+  background: rgb(255, 255, 255, 0.5);
+  opacity:0.8;
+  border-radius: 2px;
+}
+.grid-stack>.grid-stack-item>.grid-stack-item-content:hover{
+  opacity: 1;
+  background: rgb(255, 255, 255, 0.8);
+}
+
+
+/* For Charts */
+
+.line {
+  fill: none;
+  stroke: #ffab00;
+  stroke-width: 3;
+}
+
+.overlay {
+fill: none;
+pointer-events: all;
+}
+
+/* Style the dots by assigning a fill and stroke */
+.dot {
+  fill: #ffab00;
+  stroke: #fff;
+}
+
+.focus circle {
+fill: none;
+stroke: steelblue;
+}
+router-outlet ~ * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }

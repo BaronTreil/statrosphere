@@ -23,6 +23,9 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
   expandedRight = false;
 
   @Input()
+  detailsTitleColor = "#343a40";
+
+  @Input()
   selectedCountry = {};
 
   mapRef: DataMap;
@@ -63,8 +66,11 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
     console.log(this.expandedRight);
   }
 
-  showCountryDetails(countryName, countryCode) {
+  showCountryDetails(countryName, countryCode, countryColor) {
     this.selectedCountry = {};
+    if (countryColor) {
+      this.detailsTitleColor = countryColor;
+    }
     this.selectedCountry["name"] = countryName;
     this.selectedCountry["countryCode"] = countryCode;
     this.selectedCountry["details"] = this.dataService.getCountryDetail(
@@ -100,7 +106,8 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
 
   zoomTo(abs, ord) {
     console.log("Incoming coordinates: " + abs + " ; " + ord);
-    (this.mapRef as any).svg.select("g")
+    (this.mapRef as any).svg
+      .select("g")
       .transition(500)
       .attr("transform", "translate(" + abs + "," + ord + ") scale(1)");
   }
@@ -113,7 +120,7 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
           popupOnHover: true,
           highlightOnHover: true,
           highlightBorderWidth: 2,
-          highlightFillColor: "#FC8D59",
+          highlightFillColor: "#ff3c00",
           highlightBorderColor: "#db0025",
           borderColor: "#343a40",
           borderWidth: 1,
@@ -124,10 +131,10 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
             if (data != null) {
               return [
                 '<div class="hoverinfo">',
-                "<strong>",
+                "<span style='text-align: center; display:block; font-size: 1.2em;'><strong>",
                 geo.properties.name,
-                "</strong></br>",
-                data.feeling,
+                "</strong></span>",
+                "<strong>Feeling Lvl : </strong> " + "<i>" + data.feeling + "</i>",
                 "</div>"
               ].join("");
             } else {
@@ -165,10 +172,14 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
             //  .select("g")
             //.attr("transform","scale(2)");
             const bbox = nodes[i].getBBox();
-            console.log("BBOX : " + bbox.x + " ; " + + bbox.y);
+            console.log("BBOX : " + bbox.x + " ; " + +bbox.y);
             console.log("CLICK LOCATION  : " + d3.mouse(nodes[i]));
-           // this.zoomTo(bbox.x, bbox.y);
-            this.showCountryDetails(d.properties.name, d.id);
+            // this.zoomTo(bbox.x, bbox.y);
+            this.showCountryDetails(
+              d.properties.name,
+              d.id,
+              (this.datas[d.id] != null ? this.datas[d.id].fillColor : "#343a40"),
+            );
           });
           // datamap.svg.selectAll(".datamaps-subunit").on("click", geography => {
           //   d3.select("datamap").call(d3.zoom);
