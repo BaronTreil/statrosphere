@@ -12,10 +12,13 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { GridStackDirective } from "./directives/grid-stack.directive";
 import { GridStackItemDirective } from "./directives/grid-stack-item.directive";
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
+import { Graph1Component } from './graph1/graph1.component';
+import { BubbleGraphDirective } from './directives/bubble-graph.directive';
 
 const appRoutes: Routes = [
   { path: "dashboard", component: TableComponent },
   { path: "worldmap", component: WorldMapComponent },
+  { path: "graph1", component: Graph1Component },
   { path: "", redirectTo: "worldmap", pathMatch: "full" },
   { path: "**", redirectTo: "worldmap" }
 ];
@@ -33,7 +36,9 @@ const appRoutes: Routes = [
     TableComponent,
     ClickStopPropagationDirective,
     GridStackDirective,
-    GridStackItemDirective
+    GridStackItemDirective,
+    Graph1Component,
+    BubbleGraphDirective
   ],
   providers: [
     DataProviderService,
