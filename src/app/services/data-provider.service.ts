@@ -1,123 +1,126 @@
-import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
-import * as d3 from "d3-scale";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import * as d3 from '../../custom-d3';
 
 const countryList = [
-  "BLR",
-  "BLZ",
-  "RUS",
-  "RWA",
-  "SRB",
-  "TLS",
-  "REU",
-  "TKM",
-  "TJK",
-  "ROU",
-  "TKL",
-  "GNB",
-  "GUM",
-  "GTM",
-  "SGS",
-  "GRC",
-  "GNQ",
-  "GLP",
-  "JPN",
-  "GUY",
-  "GGY",
-  "GUF",
-  "GEO",
-  "GRD",
-  "GBR",
-  "GAB",
-  "SLV",
-  "GIN",
-  "GMB",
-  "GRL",
-  "ERI",
-  "MNE",
-  "MDA",
-  "MDG",
-  "MAF",
-  "MAR",
-  "MCO",
-  "UZB",
-  "MMR",
-  "MLI",
-  "MAC",
-  "MNG",
-  "MHL",
-  "MKD",
-  "MUS",
-  "MLT",
-  "MWI",
-  "MDV",
-  "MTQ",
-  "MNP",
-  "MSR",
-  "MRT",
-  "IMN",
-  "UGA",
-  "TZA",
-  "MYS",
-  "MEX",
-  "ISR",
-  "FRA",
-  "IOT",
-  "SHN",
-  "FIN",
-  "FJI",
-  "FLK",
-  "FSM",
-  "FRO",
-  "NIC",
-  "NLD",
-  "NOR",
-  "NAM",
-  "VUT",
-  "NCL",
-  "NER",
-  "NFK",
-  "NGA",
-  "NZL",
-  "NPL",
-  "NRU",
-  "NIU",
-  "COK",
-  "XKX",
-  "CIV",
-  "CHE",
-  "COL",
-  "CHN",
-  "CMR",
-  "CHL",
-  "CCK",
-  "CAN",
-  "COG",
-  "CAF",
-  "COD",
-  "CZE",
-  "CYP",
-  "CXR",
-  "CRI",
-  "CUW",
-  "CPV",
-  "CUB",
-  "SWZ",
-  "SYR",
-  "SXM"
+  'BLR',
+  'BLZ',
+  'RUS',
+  'RWA',
+  'SRB',
+  'TLS',
+  'REU',
+  'TKM',
+  'TJK',
+  'ROU',
+  'TKL',
+  'GNB',
+  'GUM',
+  'GTM',
+  'SGS',
+  'GRC',
+  'GNQ',
+  'GLP',
+  'JPN',
+  'GUY',
+  'GGY',
+  'GUF',
+  'GEO',
+  'GRD',
+  'GBR',
+  'GAB',
+  'SLV',
+  'GIN',
+  'GMB',
+  'GRL',
+  'ERI',
+  'MNE',
+  'MDA',
+  'MDG',
+  'MAF',
+  'MAR',
+  'MCO',
+  'UZB',
+  'MMR',
+  'MLI',
+  'MAC',
+  'MNG',
+  'MHL',
+  'MKD',
+  'MUS',
+  'MLT',
+  'MWI',
+  'MDV',
+  'MTQ',
+  'MNP',
+  'MSR',
+  'MRT',
+  'IMN',
+  'UGA',
+  'TZA',
+  'MYS',
+  'MEX',
+  'ISR',
+  'FRA',
+  'IOT',
+  'SHN',
+  'FIN',
+  'FJI',
+  'FLK',
+  'FSM',
+  'FRO',
+  'NIC',
+  'NLD',
+  'NOR',
+  'NAM',
+  'VUT',
+  'NCL',
+  'NER',
+  'NFK',
+  'NGA',
+  'NZL',
+  'NPL',
+  'NRU',
+  'NIU',
+  'COK',
+  'XKX',
+  'CIV',
+  'CHE',
+  'COL',
+  'CHN',
+  'CMR',
+  'CHL',
+  'CCK',
+  'CAN',
+  'COG',
+  'CAF',
+  'COD',
+  'CZE',
+  'CYP',
+  'CXR',
+  'CRI',
+  'CUW',
+  'CPV',
+  'CUB',
+  'SWZ',
+  'SYR',
+  'SXM'
 ];
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DataProviderService {
   dataSet;
   dataSetFull;
   dataSubject = new Subject<any>();
+  countryDataSubject = new Subject<any>();
+
   countryData;
   constructor() {
     this.generateData();
     this.emitDataSubject();
+    this.emitCountryDataSubject();
   }
 
   generateData() {
@@ -129,16 +132,14 @@ export class DataProviderService {
       const comp = this.generateValue(1000, 9000);
       const w = this.generateValue(0, 100);
 
-      countryData.push([
-        element,
-        {
-          feeling: f,
-          population: p,
-          consumers: consu,
-          companies: comp,
-          wealthness: w
-        }
-      ]);
+      countryData.push({
+        name: element,
+        feeling: f,
+        population: p,
+        consumers: consu,
+        companies: comp,
+        wealthness: w
+      });
     });
     this.countryData = countryData;
     this.convertToColouredDataSet();
@@ -149,7 +150,7 @@ export class DataProviderService {
     if (ctryDetails) {
       return ctryDetails;
     } else {
-      console.log("No country details found");
+      console.log('No country details found');
       return false;
     }
   }
@@ -157,19 +158,19 @@ export class DataProviderService {
     this.dataSet = {};
     this.dataSetFull = {};
     const feelinValues = this.countryData.map(function(obj) {
-      return obj[1].feeling;
+      return obj.feeling;
     });
     const minValue = Math.min.apply(null, feelinValues),
       maxValue = Math.max.apply(null, feelinValues);
 
     const paletteScale = d3
-      .scaleLinear()
+      .scaleLinear<string>()
       .domain([minValue, maxValue])
-      .range(["#e40000", "#17c500"]); // green color
+      .range(['#e40000', '#17c500']); // green color
 
     this.countryData.forEach(element => {
-      const iso = element[0],
-        value = element[1].feeling;
+      const iso = element.name,
+        value = element.feeling;
       this.dataSet[iso] = {
         feeling: value,
         fillColor: paletteScale(value)
@@ -177,13 +178,13 @@ export class DataProviderService {
     });
 
     this.countryData.forEach(element => {
-      const iso = element[0];
+      const iso = element.name;
       this.dataSetFull[iso] = {
-        feeling: element[1].feeling,
-        population: element[1].population,
-        consumers: element[1].consumers,
-        companies: element[1].companies,
-        wealthness: element[1].wealthness,
+        feeling: element.feeling,
+        population: element.population,
+        consumers: element.consumers,
+        companies: element.companies,
+        wealthness: element.wealthness,
         name: iso
       };
     });
@@ -197,5 +198,9 @@ export class DataProviderService {
 
   emitDataSubject() {
     this.dataSubject.next(this.dataSet);
+  }
+
+  emitCountryDataSubject() {
+    this.dataSubject.next(this.countryData);
   }
 }
