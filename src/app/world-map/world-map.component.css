@@ -20,8 +20,11 @@ p {
 ----------------------------------------------------- */
 
 .wrapper {
+  position: relative;
+  top: 8px;
   display: flex;
   width: 100%;
+  height : calc(100% - 55px);
 }
 
 #sidebar {

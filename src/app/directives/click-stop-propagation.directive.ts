@@ -9,3 +9,4 @@ export class ClickStopPropagationDirective {
     event.stopPropagation();
   }
 }
+ 

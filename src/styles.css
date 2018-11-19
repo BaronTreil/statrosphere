@@ -66,6 +66,10 @@ stroke: steelblue;
 }
 router-outlet ~ * {
   position: absolute;
-  height: 100%;
+  height: calc(100% - 50px);
   width: 100%;
+}
+
+.chart-example{
+  border : solid 1px orange;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataProviderService } from '../services/data-provider.service';
 
 @Component({
   selector: 'app-graph1',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Graph1Component implements OnInit {
 
-  constructor() { }
+  constructor(private dataService: DataProviderService) { }
 
   ngOnInit() {
   }
