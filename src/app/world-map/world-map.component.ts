@@ -4,7 +4,8 @@ import {
   OnInit,
   ViewChild,
   AfterViewInit,
-  Input
+  Input,
+  OnDestroy
 } from "@angular/core";
 import * as d3 from "d3";
 import { Subscription } from "rxjs";
@@ -15,7 +16,7 @@ import * as Datamap from "datamaps";
   templateUrl: "./world-map.component.html",
   styleUrls: ["./world-map.component.css"]
 })
-export class WorldMapComponent implements OnInit, AfterViewInit {
+export class WorldMapComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("mapDiv")
   mapDiv;
 
@@ -192,5 +193,9 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
         data: this.datas
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.countryDataSubscription.unsubscribe();
   }
 }
